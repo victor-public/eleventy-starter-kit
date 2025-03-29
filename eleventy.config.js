@@ -10,7 +10,4 @@ export default function (eleventyConfig) {
 
 export const config = {
     pathPrefix: PATH_PREFIX || "",
-    dir: {
-        input: "./src"
-    }
 }
