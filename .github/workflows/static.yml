@@ -40,7 +40,8 @@ jobs:
           node-version: latest
           cache: "npm"
       - run: |
-          echo "PATH_PREFIX=${{ steps.deployment.outputs.page_url }}" >> $GITHUB_ENV
+          PREFIX=$(git rev-parse --show-toplevel | xargs basename)
+          echo "PATH_PREFIX=$PREFIX" >> $GITHUB_ENV
         shell: bash
       - run: |
           npm install
