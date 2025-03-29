@@ -38,10 +38,9 @@ jobs:
         with:
           node-version: latest
           cache: "npm"
-
+      - run: echo "PATH_PREFIX=eleventy-startup" >> $GITHUB_ENV
       - run: |
           npm install
-          PATH_PREFIX="eleventy-startup"
           npm run build
         shell: bash
       - name: Upload artifact
