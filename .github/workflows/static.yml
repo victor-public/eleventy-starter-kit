@@ -40,7 +40,7 @@ jobs:
           cache: "npm"
       - run: echo "PATH_PREFIX=${{ steps.deployment.outputs.page_url }}" >> $GITHUB_ENV
       - run: |
-          echo ${{ env.github-pages }}
+          echo ${{ environment }}
           npm install
           npm run build
         shell: bash
