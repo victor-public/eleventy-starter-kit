@@ -38,16 +38,16 @@ jobs:
         with:
           node-version: latest
           cache: "npm"
-      - run: echo "PATH_PREFIX=${{ steps.deployment.outputs.page_url }}" >> $GITHUB_ENV
       - run: |
-          echo ${{ environment }}
+          echo "PATH_PREFIX=${{ steps.deployment.outputs.page_url }}" >> $GITHUB_ENV
+        bash: shell
+      - run: |
           npm install
           npm run build
         shell: bash
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
           path: './_site'
       - name: Deploy to GitHub Pages
         id: deployment
