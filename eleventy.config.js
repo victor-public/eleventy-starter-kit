@@ -1,5 +1,4 @@
-import { EleventyHtmlBasePlugin } from "@11ty/eleventy";
-
+import { EleventyHtmlBasePlugin } from "@11ty/eleventy"
 import fs from "fs"
 import path from "path"
 import cssnano from "cssnano"
@@ -19,7 +18,6 @@ const processor = postcss([
         preset: "default"
     }),
 ])
-
 
 export default function (eleventyConfig) {
     eleventyConfig.addPlugin(EleventyHtmlBasePlugin);
