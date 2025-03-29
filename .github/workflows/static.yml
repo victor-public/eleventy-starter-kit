@@ -38,7 +38,7 @@ jobs:
         with:
           node-version: latest
           cache: "npm"
-      - run: echo "PATH_PREFIX=eleventy-startup" >> $GITHUB_ENV
+      - run: echo "PATH_PREFIX=${{ steps.deployment.outputs.page_url }}" >> $GITHUB_ENV
       - run: |
           npm install
           npm run build
