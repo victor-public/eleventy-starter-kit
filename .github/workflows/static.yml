@@ -43,7 +43,7 @@ jobs:
           PREFIX=$(git rev-parse --show-toplevel | xargs basename)
           echo $PREFIX
           echo ${{ github.repository }}
-          echo "PATH_PREFIX=$PREFIX" >> $GITHUB_ENV
+          echo "PATH_PREFIX=${PREFIX}" >> $GITHUB_ENV
         shell: bash
       - run: |
           npm install
