@@ -40,8 +40,8 @@ jobs:
           cache: "npm"
 
       - run: |
-          npm install;
-          npx @11ty/eleventy
+          npm install
+          npm run build
         shell: bash
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
