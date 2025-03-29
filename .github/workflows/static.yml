@@ -41,6 +41,7 @@ jobs:
 
       - run: |
           npm install
+          PATH_PREFIX="eleventy-startup"
           npm run build
         shell: bash
       - name: Upload artifact
