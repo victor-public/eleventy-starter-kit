@@ -33,7 +33,12 @@ jobs:
         with:
           fetch-depth: 0
       - uses: actions/configure-pages@v5
-      - uses: actions/setup-node@latest
+      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: latest
+          cache: "npm"
+
       - run: |
           npm install;
           npx @11ty/eleventy
