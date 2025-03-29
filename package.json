@@ -4,8 +4,8 @@
   "description": "Eleventy + Github pages + TailwindCSS",
   "main": "index.js",
   "scripts": {
-    "start": "npx @11ty/eleventy --pathprefix 'eleventy-gh-demo' --serve",
-    "build": "npx @11ty/eleventy --pathprefix 'eleventy-gh-demo'"
+    "start": "npx @11ty/eleventy --pathprefix 'eleventy-startup' --serve",
+    "build": "npx @11ty/eleventy --pathprefix 'eleventy-startup'"
   },
   "keywords": [],
   "author": "",
