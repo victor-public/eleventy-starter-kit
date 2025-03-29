@@ -41,6 +41,8 @@ jobs:
           cache: "npm"
       - run: |
           PREFIX=$(git rev-parse --show-toplevel | xargs basename)
+          echo $PREFIX
+          echo ${{ github.repository }}
           echo "PATH_PREFIX=$PREFIX" >> $GITHUB_ENV
         shell: bash
       - run: |
