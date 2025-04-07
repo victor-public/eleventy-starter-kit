@@ -29,5 +29,5 @@ jobs:
       - uses: ./.github/actions/publish
         with:
           folder: _site
-          branch: gh-pages
+          branch: docs
           id: ${{ github.event.number }}
