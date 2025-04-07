@@ -1,7 +1,18 @@
 on:
   pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
+  # Single deploy job since we're just deploying
   deploy:
     name: Deploy
     environment:
@@ -21,14 +32,16 @@ jobs:
         with:
           node-version: latest
           cache: "npm"
-      - name: Build
-        run: |
+      - run: |
           PREFIX=$(git rev-parse --show-toplevel | xargs basename)
+          echo "PATH_PREFIX=${PREFIX}" >> $GITHUB_ENV
+      - run: |
           npm install
           npm run build
-      - name: Deploy preview
-        uses: rossjrw/pr-preview-action@v1
+      - uses: actions/upload-pages-artifact@v3
         with:
-          source-dir: ./_site/
-          preview-branch: pages
-          umbrella-dir: preview
+          path: './_site'
+      - id: deployment
+        uses: actions/deploy-pages@v4
+        with:
+          preview: true
