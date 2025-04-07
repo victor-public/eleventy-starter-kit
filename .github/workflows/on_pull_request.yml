@@ -30,6 +30,6 @@ jobs:
       - id: deployment
         uses: ./.github/actions/publish
         with:
-          folder: _site
+          folder: ./_site
           branch: pages
           id: ${{ github.event.number }}
