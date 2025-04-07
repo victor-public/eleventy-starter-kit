@@ -1,11 +1,6 @@
 on:
   pull_request:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 jobs:
   deploy:
     name: Deploy
@@ -31,8 +26,9 @@ jobs:
           PREFIX=$(git rev-parse --show-toplevel | xargs basename)
           npm install
           npm run build
-      - uses: ./.github/actions/publish
+      - name: Deploy preview
+        uses: rossjrw/pr-preview-action@v1
         with:
-          folder: _site
-          branch: pages
-          id: ${{ github.event.number }}
+          source-dir: ./_site/
+          preview-branch: pages
+          umbrella-dir: preview
