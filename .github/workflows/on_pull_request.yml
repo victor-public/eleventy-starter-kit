@@ -1,0 +1,38 @@
+on:
+  pull_request:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    name: Deploy
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/configure-pages@v5
+      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: latest
+          cache: "npm"
+      - name: Build
+        run: |
+          PREFIX=$(git rev-parse --show-toplevel | xargs basename)
+          npm install
+          npm run build
+      - uses: ./.github/actions/publish
+        with:
+          folder: _site
+          branch: pages
+          id: ${{ github.event.number }}
