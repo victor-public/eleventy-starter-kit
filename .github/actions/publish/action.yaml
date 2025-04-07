@@ -1,0 +1,79 @@
+name: Publish to pages
+description: Publishes contents to github pages
+inputs:
+  folder:
+    description: Contents we want to publish
+    type: string
+    required: true
+  branch:
+    description: Github pages branch
+    type: string
+    required: true
+  id:
+    description: |
+      When published, the contents will be accessible under the `/{id}` url segment
+      By default, we publish at the Git pages website's root.
+    type: string
+    required: false
+    default: '.'
+  user-name:
+    description: User's name to use while pushing changes
+    type: string
+    required: false
+    default: preview-bot
+  user-email:
+    description: User's mail to use while pushing changes
+    type: string
+    required: false
+    default: preview-bot@viasat.com
+outputs:
+  url:
+    description: Location of published contents 
+    value: ${{ steps.publication.outputs.url }}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+runs:
+  using: "composite"
+  steps:
+    - run: |
+        git config --global user.name ${{ inputs.user-name }}
+        git config --global user.email ${{ inputs.user-email }}
+        echo "tstamp=$(date +%s)" >> $GITHUB_OUTPUT
+      shell: bash
+      # By checking out to target branch we will loose 
+      # folder contents. We need to cache it up.
+    - uses: actions/upload-artifact@v3
+      with:
+        name: preview-artifact-${{ steps.setup.outputs.tstamp }}
+        path: ${{ inputs.folder }}
+        retention-days: 1
+    - name: Checkout  
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        ref: ${{ inputs.branch }}
+    - uses: actions/download-artifact@v3
+      with:
+        name: preview-artifact-${{ steps.setup.outputs.tstamp }}
+        path: dist-${{ steps.setup.outputs.tstamp }}
+    - id: publication
+      run: |
+        mkdir -p ${{ inputs.id }}
+        cp -fR dist-${{ steps.setup.outputs.tstamp }}/* ${{ inputs.id }}
+        git add ${{ inputs.id }}
+        git commit -m "chore(preview): update pages" --allow-empty
+        git push origin ${{ inputs.branch }}
+        
+        if [ "${{ inputs.id }}" = "." ]; then
+          URL="https://pages.git.viasat.com/${GITHUB_REPOSITORY}"
+        else
+          URL="https://pages.git.viasat.com/${GITHUB_REPOSITORY}/${{ inputs.id }}"
+        fi
+
+        echo "Published to <a href='${URL}' target='__blank'>${URL}</a>" >> $GITHUB_STEP_SUMMARY
+        echo "url=$URL" >> $GITHUB_OUTPUT
+      shell: bash

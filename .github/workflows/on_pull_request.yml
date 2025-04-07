@@ -1,15 +1,5 @@
 on:
-  push:
-    branches: ["master"]
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -31,14 +21,13 @@ jobs:
         with:
           node-version: latest
           cache: "npm"
-      - run: |
+      - name: Build
+        run: |
           PREFIX=$(git rev-parse --show-toplevel | xargs basename)
-          echo "PATH_PREFIX=${PREFIX}" >> $GITHUB_ENV
-      - run: |
           npm install
           npm run build
-      - uses: actions/upload-pages-artifact@v3
+      - uses: ./.github/actions/publish
         with:
-          path: './_site'
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          folder: _site
+          branch: gh-pages
+          id: ${{ github.event.number }}
