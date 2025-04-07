@@ -47,11 +47,11 @@ runs:
         name: preview-artifact-${{ steps.setup.outputs.tstamp }}
         path: ${{ inputs.folder }}
         retention-days: 1
-    # - name: Checkout  
-    #   uses: actions/checkout@v4
-    #   with:
-    #     fetch-depth: 0
-    #     ref: ${{ inputs.branch }}
+    - name: Checkout  
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        ref: ${{ inputs.branch }}
     # - uses: actions/download-artifact@v3
     #   with:
     #     name: preview-artifact-${{ steps.setup.outputs.tstamp }}
