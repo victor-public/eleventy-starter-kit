@@ -42,7 +42,7 @@ runs:
     - uses: actions/checkout@v4
       with: 
         fetch-depth: 0
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: preview-artifact-${{ steps.setup.outputs.tstamp }}
         path: ${{ inputs.folder }}
