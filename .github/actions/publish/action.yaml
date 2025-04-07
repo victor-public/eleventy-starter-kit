@@ -31,11 +31,6 @@ outputs:
     description: Location of published contents 
     value: ${{ steps.publication.outputs.url }}
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 runs:
   using: "composite"
   steps:
