@@ -39,13 +39,11 @@ runs:
         git config --global user.email ${{ inputs.user-email }}
         echo "tstamp=$(date +%s)" >> $GITHUB_OUTPUT
       shell: bash
-      # By checking out to target branch we will loose 
-      # folder contents. We need to cache it up.
-    # - uses: actions/upload-artifact@v3
-    #   with:
-    #     name: preview-artifact-${{ steps.setup.outputs.tstamp }}
-    #     path: ${{ inputs.folder }}
-    #     retention-days: 1
+    - uses: actions/upload-artifact@v3
+      with:
+        name: preview-artifact-${{ steps.setup.outputs.tstamp }}
+        path: ${{ inputs.folder }}
+        retention-days: 1
     # - name: Checkout  
     #   uses: actions/checkout@v4
     #   with:
