@@ -1,6 +1,5 @@
 on:
-  push:
-    branches: ["master"]
+  pull_request:
 
 permissions:
   contents: read
@@ -12,6 +11,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # Single deploy job since we're just deploying
   deploy:
     name: Deploy
     environment:
@@ -42,3 +42,5 @@ jobs:
           path: './_site'
       - id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          preview: true
