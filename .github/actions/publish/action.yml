@@ -52,23 +52,23 @@ runs:
       with:
         fetch-depth: 0
         ref: ${{ inputs.branch }}
-    # - uses: actions/download-artifact@v3
-    #   with:
-    #     name: preview-artifact-${{ steps.setup.outputs.tstamp }}
-    #     path: dist-${{ steps.setup.outputs.tstamp }}
-    # - id: publication
-    #   run: |
-    #     mkdir -p ${{ inputs.id }}
-    #     cp -fR dist-${{ steps.setup.outputs.tstamp }}/* ${{ inputs.id }}
-    #     git add ${{ inputs.id }}
-    #     git commit -m "chore(preview): update pages" --allow-empty
-    #     git push origin ${{ inputs.branch }}
+    - uses: actions/download-artifact@v3
+      with:
+        name: preview-artifact-${{ steps.setup.outputs.tstamp }}
+        path: dist-${{ steps.setup.outputs.tstamp }}
+    - id: publication
+      run: |
+        mkdir -p ${{ inputs.id }}
+        cp -fR dist-${{ steps.setup.outputs.tstamp }}/* ${{ inputs.id }}
+        git add ${{ inputs.id }}
+        git commit -m "chore(preview): update pages" --allow-empty
+        git push origin ${{ inputs.branch }}
         
-    #     if [ "${{ inputs.id }}" = "." ]; then
-    #       URL="https://pages.git.viasat.com/${GITHUB_REPOSITORY}"
-    #     else
-    #       URL="https://pages.git.viasat.com/${GITHUB_REPOSITORY}/${{ inputs.id }}"
-    #     fi
+        if [ "${{ inputs.id }}" = "." ]; then
+          URL="https://pages.git.viasat.com/${GITHUB_REPOSITORY}"
+        else
+          URL="https://pages.git.viasat.com/${GITHUB_REPOSITORY}/${{ inputs.id }}"
+        fi
 
     #     echo "Published to <a href='${URL}' target='__blank'>${URL}</a>" >> $GITHUB_STEP_SUMMARY
     #     echo "url=$URL" >> $GITHUB_OUTPUT
