@@ -33,5 +33,5 @@ jobs:
         uses: ./.github/actions/publish
         with:
           folder: _site
-          branch: docs
+          branch: pages
           id: ${{ github.event.number }}
