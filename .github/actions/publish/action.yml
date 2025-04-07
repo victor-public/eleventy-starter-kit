@@ -33,7 +33,7 @@ outputs:
 
 runs:
   using: "composite"
-  steps:
+  steps: 
     - run: |
         git config --global user.name ${{ inputs.user-name }}
         git config --global user.email ${{ inputs.user-email }}
@@ -47,7 +47,7 @@ runs:
         path: ${{ inputs.folder }}
         retention-days: 1
     - name: Checkout  
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         fetch-depth: 0
         ref: ${{ inputs.branch }}
